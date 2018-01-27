@@ -17,8 +17,6 @@ public class Block : MonoBehaviour {
 	private SpriteRenderer render;
 	GridPlay grid;
 
-	CameraHelper cam;
-
 	bool isMoving = false;
 
 	// Use this for initialization
@@ -30,7 +28,6 @@ public class Block : MonoBehaviour {
 		halfSize = render.bounds.extents.x;
 		moveDetectionOffset = render.bounds.extents.x*.5f;
 		anchoredPosition = transform.position;
-		cam = Camera.main.GetComponent<CameraHelper> ();
 		grid = GetComponentInParent<GridPlay> ();
 	}
 
