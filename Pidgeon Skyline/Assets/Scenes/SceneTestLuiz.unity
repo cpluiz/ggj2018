@@ -146,6 +146,11 @@ MonoBehaviour:
   - {fileID: 114172569582917676, guid: b3e82cd10a94264488a579421a7a623c, type: 2}
   - {fileID: 114172569582917676, guid: 90cf562972d849840ae49b14b164e469, type: 2}
   - {fileID: 114172569582917676, guid: 2e8579797ce200e48ba4893853ef693a, type: 2}
+  - {fileID: 114172569582917676, guid: bf7b1247e72004844a788ecaf155982d, type: 2}
+  - {fileID: 114172569582917676, guid: bf7b1247e72004844a788ecaf155982d, type: 2}
+  - {fileID: 114172569582917676, guid: bf7b1247e72004844a788ecaf155982d, type: 2}
+  - {fileID: 114172569582917676, guid: bf7b1247e72004844a788ecaf155982d, type: 2}
+  - {fileID: 114172569582917676, guid: bf7b1247e72004844a788ecaf155982d, type: 2}
   puzzleBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}

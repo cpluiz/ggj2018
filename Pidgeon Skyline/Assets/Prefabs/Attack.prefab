@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1667489029727544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.348718, y: 2.447432, z: 0}
+  m_LocalPosition: {x: -2.9999998, y: 4.6666665, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,7 +81,7 @@ MonoBehaviour:
   blockImage: {fileID: 21300000, guid: 7f07ed304a9e34047bad61aa54387320, type: 3}
   blockName: Attack
   moveDetectionOffset: 0.5
-  anchoredPosition: {x: 0, y: 0}
+  anchoredPosition: {x: -2.9999998, y: 4.6666665}
   index: {x: 0, y: 0}
 --- !u!212 &212639580269378620
 SpriteRenderer:
