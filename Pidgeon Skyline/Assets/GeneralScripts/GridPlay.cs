@@ -14,7 +14,7 @@ public class GridPlay : MonoBehaviour {
 	[SerializeField]
 	private Block[,] block;
 	CameraHelper cam;
-	public Bounds puzzleBounds, mapBounds;
+	public Bounds puzzleBounds;
 	private List<Vector2Int> blocksToDestroy;
 
 	// Use this for initialization
@@ -86,7 +86,6 @@ public class GridPlay : MonoBehaviour {
 			}
 		}
 		if (added > 0) {
-			Debug.Log ("era pra verificar a porra toda");
 			CheckAllPuzzleBlocks ();
 		}
 	}
