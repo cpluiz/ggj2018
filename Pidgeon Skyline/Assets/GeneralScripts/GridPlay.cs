@@ -28,12 +28,42 @@ public class GridPlay : MonoBehaviour {
 		for (int i = 0; i < cols; i++) {
 			for (int j = 0; j < rows; j++) {
 				point[i,j] = new Vector2 (cam.left + ( blockWidth * i ) + blockWidthCenterOffset, cam.top - (blockWidth * j) - blockWidthCenterOffset);
-				block[i,j] = Instantiate (blocks [0], point [i,j], Quaternion.identity, gameObject.transform) as Block;
+				Block toInstatiate = GetBlock (i, j);
+				block[i,j] = Instantiate (toInstatiate, point [i,j], Quaternion.identity, gameObject.transform) as Block;
 				block[i,j].SetIndex(i,j);
 			}
 		}
 		puzzleBounds = new Bounds (new Vector2(0, point[0,4].y+blockWidth*1.5f) ,new Vector2 (blockWidth * cols, blockWidth * rows));
 	}
+
+	//TODO Actually initialize the puzzle to not start with a lot of events at the start
+	Block GetBlock(int x, int y){
+		Block toInstantiate = blocks [Random.Range (0, blocks.Length - 1)];
+		if (y > 1) {
+			if (block [x, y - 1].blockName == block [x, y - 2].blockName && block [x, y - 1].blockName == toInstantiate.blockName) {
+				toInstantiate = GetBlock (x, y);
+			}
+		}
+		if (x > 1) {
+			if (block [x - 1, y].blockName == block [x - 2, y].blockName && block [x - 1, y].blockName == toInstantiate.blockName) {
+				toInstantiate = GetBlock (x, y);
+			}
+		}
+		return toInstantiate;
+	}
+
+//	bool CheckNeighboards(float x, float y){
+//		
+//	}
+//
+//	bool CheckPreviousHorizontalNeighboards(float x, float y){
+//	}
+//	bool CheckNextHorizontalNeighboards(float x, float y){
+//	}
+//	bool CheckPreviousVerticalNeighboards(float x, float y){
+//	}
+//	bool CheckNextVerticalNeighboards(float x, float y){
+//	}
 
 	public void ChangePosition (Vector2Int index, Vector2Int direction){
 		Vector2Int index2 = index + direction;
