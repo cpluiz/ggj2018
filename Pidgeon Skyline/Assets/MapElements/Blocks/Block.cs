@@ -14,7 +14,9 @@ public class Block : MonoBehaviour {
 	[SerializeField]
 	private Vector2Int index;
 	private float moveOffset, halfSize;
+	[SerializeField]
 	private SpriteRenderer render;
+	public SpriteRenderer childElement;
 	GridPlay grid;
 	public Color c;
 
@@ -24,13 +26,15 @@ public class Block : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		render = GetComponent<SpriteRenderer> ();
-		render.sprite = blockImage;
+		childElement.sprite = blockImage;
 		gameObject.name = blockName;
 		moveOffset = render.bounds.size.x;
 		halfSize = render.bounds.extents.x;
 		moveDetectionOffset = render.bounds.extents.x*.5f;
 		anchoredPosition = transform.position;
 		grid = GetComponentInParent<GridPlay> ();
+		render.sortingOrder = 0;
+		childElement.sortingOrder = 1;
 	}
 
 	public void SetIndex(int x, int y){
@@ -71,6 +75,7 @@ public class Block : MonoBehaviour {
 		if (Input.GetMouseButtonUp (0) && isMoving) {
 			CheckPosition ();
 			render.sortingOrder = 0;
+			childElement.sortingOrder = 1;
 			isMoving = false;
 		}
 		if (!isMoving)
@@ -96,6 +101,7 @@ public class Block : MonoBehaviour {
 		if (Input.GetMouseButton (0)) {
 			isMoving = true;
 			render.sortingOrder = 10;
+			childElement.sortingOrder = 11;
 		}
 	}
 

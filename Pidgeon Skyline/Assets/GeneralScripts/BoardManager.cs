@@ -32,9 +32,13 @@ public class BoardManager : MonoBehaviour {
 		firstTileUp = new Vector2 (cam.left+blockWidthCenterOffset, cam.top-(cam.screenHeight*.4f)-blockHeightCenterOffset);
 		for (int i = 0; i < mazeCols; i++) {
 			for (int j = 0; j < mazeRols; j++) {
-				tile[i,j] = Instantiate (tiles [0], new Vector2 (firstTileUp.x +(blockWidth * i), firstTileUp.y -(blockHeight * j)), Quaternion.identity, transform) as MazeTile;
+				tile[i,j] = Instantiate (tiles [0], GetGridPosition(i,j), Quaternion.identity, transform) as MazeTile;
 			}
 		}
+	}
+
+	public Vector2 GetGridPosition(int x, int y){
+		return new Vector2 (firstTileUp.x +(blockWidth * x), firstTileUp.y -(blockHeight * y));
 	}
 
 	void Update(){
@@ -43,7 +47,7 @@ public class BoardManager : MonoBehaviour {
 		}
 	}
 
-	void MoveBoardToRight(int moveIndex){
+	public void MoveBoardToRight(int moveIndex){
 		boardOffsetX += moveIndex;
 		for (int y = 0; y < mazeRols; y++) {
 			for (int x = 0; x < mazeCols; x++) {

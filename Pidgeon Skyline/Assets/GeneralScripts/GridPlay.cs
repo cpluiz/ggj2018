@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BaseAssets;
 
 public class GridPlay : MonoBehaviour {
 
 	[Header("Blocks to build a grid")]
 	public Block[] blocks;
-	public GameObject effect;
+	public EffectBehavior effect;
 	//number of total puzzle columns in screen
 	private int cols = 24;
 	private int rows = 6;
@@ -20,6 +21,7 @@ public class GridPlay : MonoBehaviour {
 	public bool deletingRow, deletingCol = false;
 	Vector2 effectPosition;
 	bool showEffect;
+	string effectName;
 
 	// Use this for initialization
 	void Start () {
@@ -40,6 +42,7 @@ public class GridPlay : MonoBehaviour {
 			}
 		}
 		puzzleBounds = new Bounds (new Vector2(0, point[0,4].y+blockWidth*1.5f) ,new Vector2 (blockWidth * cols, blockWidth * rows));
+//		AudioManager.MusicVolume (0.5f);
 	}
 
 	Block GetBlock(int x, int y){
@@ -68,6 +71,7 @@ public class GridPlay : MonoBehaviour {
 		string blockName = block [x, y].blockName;
 		vertical = CheckVertical (x, y, blockName);
 		if (vertical >= 3) {
+			effectName = blockName;
 			showEffect = !blockName.Equals("NoAction");
 			deletingCol = true;
 			deletingRow = false;
@@ -75,6 +79,7 @@ public class GridPlay : MonoBehaviour {
 		} else{
 			horizontal = CheckHorizontal (x, y, blockName);
 			if (horizontal >= 3) {
+				effectName = blockName;
 				showEffect = !blockName.Equals("NoAction");
 				deletingRow = true;
 				deletingCol = false;
@@ -104,6 +109,7 @@ public class GridPlay : MonoBehaviour {
 		int x = blocksToDestroy [0].x;
 		int rowsToFall = blocksToDestroy.Count;
 		bool remove = true;
+		int count = rowsToFall;
 		foreach (Vector2Int index in blocksToDestroy) {
 			remove = remove && RemoveBlock (index.x, index.y);
 			if (minY > index.y-1) {
@@ -119,22 +125,31 @@ public class GridPlay : MonoBehaviour {
 		}
 	}
 
-	bool RemoveBlock(int x, int y){
+	bool RemoveBlock(int x, int y, int index = 1, int totalToRemove = 1){
 		Block bloc = block [x, y];
+		string complement = "";
 		if (bloc == null)
 			return true;
 		if (bloc.DestroyBlock ()) {
 			Destroy (bloc.gameObject);
+			if (index == 0) {
+				complement = "+1";
+			} else if (index < totalToRemove) {
+				complement = "+2";
+			}
+			AudioManager.PlayEffect ("Drop"+complement);
 			block [x, y] = null;
 			return true;
 		}
 		return false;
 	}
+		
 
 	void DestroyRowBlocks(){
 		int y = blocksToDestroy [0].y;
 		int x = blocksToDestroy [0].x;
 		bool remove = true;
+		int total = blocksToDestroy.Count;
 		foreach (Vector2Int index in blocksToDestroy) {
 			remove = remove && RemoveBlock (index.x, index.y);
 			if (!remove) {
