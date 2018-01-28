@@ -6,6 +6,7 @@ public class GridPlay : MonoBehaviour {
 
 	[Header("Blocks to build a grid")]
 	public Block[] blocks;
+	public GameObject effect;
 	//number of total puzzle columns in screen
 	private int cols = 24;
 	private int rows = 6;
@@ -16,6 +17,8 @@ public class GridPlay : MonoBehaviour {
 	CameraHelper cam;
 	public Bounds puzzleBounds;
 	private List<Vector2Int> blocksToDestroy;
+	public bool deletingRow, deletingCol = false;
+	Vector2 effectPosition;
 
 	// Use this for initialization
 	void Start () {
@@ -58,19 +61,22 @@ public class GridPlay : MonoBehaviour {
 	}
 
 	void CheckNeighboards(int x, int y){
+		if (deletingCol || deletingRow)
+			return;
 		int vertical, horizontal = 0;
 		string blockName = block [x, y].blockName;
 		vertical = CheckVertical (x, y, blockName);
 		if (vertical >= 3) {
-			DestroyColumnBlocks ();
+			deletingCol = true;
+			deletingRow = false;
+			effectPosition = point [x, y];
 		} else{
 			horizontal = CheckHorizontal (x, y, blockName);
 			if (horizontal >= 3) {
-				DestroyRowBlocks ();
+				deletingRow = true;
+				deletingCol = false;
+				effectPosition = point [x, y];
 			}
-		}
-		if (vertical >= 3 || horizontal >= 3) {
-			FillPuzzleBoard ();
 		}
 	}
 
@@ -94,32 +100,51 @@ public class GridPlay : MonoBehaviour {
 		int minY = rows;
 		int x = blocksToDestroy [0].x;
 		int rowsToFall = blocksToDestroy.Count;
+		bool remove = true;
 		foreach (Vector2Int index in blocksToDestroy) {
-			RemoveBlock (index.x, index.y);
+			remove = remove && RemoveBlock (index.x, index.y);
 			if (minY > index.y-1) {
 				minY = index.y-1;
 			}
 		}
-		while (minY >= 0) {
+		while (minY >= 0 && remove) {
 			ChangePosition (x, minY, Vector2Int.up * rowsToFall);
 			minY--;
 		}
+		if (remove) {
+			deletingCol = false;
+		}
 	}
 
-	void RemoveBlock(int x, int y){
-		Destroy (block [x, y].gameObject);
-		block [x, y] = null;
+	bool RemoveBlock(int x, int y){
+		Block bloc = block [x, y];
+		if (bloc == null)
+			return true;
+		if (bloc.DestroyBlock ()) {
+			Destroy (bloc.gameObject);
+			block [x, y] = null;
+			return true;
+		}
+		return false;
 	}
 
 	void DestroyRowBlocks(){
 		int y = blocksToDestroy [0].y;
+		int x = blocksToDestroy [0].x;
+		bool remove = true;
 		foreach (Vector2Int index in blocksToDestroy) {
-			RemoveBlock (index.x, index.y);
-			int j = y-1;
-			while (j >= 0) {
-				ChangePosition (index.x, j, Vector2Int.up);
-				j--;
+			remove = remove && RemoveBlock (index.x, index.y);
+			if (!remove) {
+				continue;
 			}
+		}
+		int j = y-1;
+		while (j >= 0 && remove) {
+			ChangePosition (x, j, Vector2Int.up);
+			j--;
+		}
+		if (remove) {
+			deletingRow = false;
 		}
 	}
 
@@ -196,7 +221,21 @@ public class GridPlay : MonoBehaviour {
 		block [x + moveIndex.x, y + moveIndex.y] = temp;
 	}
 
+
+	//It's not preaty, but it works!!!
 	void Update () {
-		
+		if (deletingCol) {
+			DestroyColumnBlocks ();
+			if (!deletingCol) {
+				Instantiate (effect, effectPosition, Quaternion.identity);
+				FillPuzzleBoard ();
+			}
+		}else if (deletingRow) {
+			DestroyRowBlocks ();
+			if (!deletingRow) {
+				Instantiate (effect, effectPosition, Quaternion.identity);
+				FillPuzzleBoard ();
+			}
+		}
 	}
 }

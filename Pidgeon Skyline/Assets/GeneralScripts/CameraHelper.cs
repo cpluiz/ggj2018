@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraHelper : MonoBehaviour {
 	Bounds cameraBounds;
 	public float top, down, left, right;
-	public float screenWidth;
+	public float screenWidth, screenHeight;
 	Camera cam;
 
 	// Use this for initialization
@@ -15,5 +15,6 @@ public class CameraHelper : MonoBehaviour {
 		var uperRight = cam.ScreenToWorldPoint (new Vector3 (Screen.width, Screen.height, 0));
 		top = uperRight.y; down = lowerLeft.y; left = lowerLeft.x; right = uperRight.x;
 		screenWidth = right - left;
+		screenHeight = top - down;
 	}
 }

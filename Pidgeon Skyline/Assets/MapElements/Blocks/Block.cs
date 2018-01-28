@@ -16,8 +16,10 @@ public class Block : MonoBehaviour {
 	private float moveOffset, halfSize;
 	private SpriteRenderer render;
 	GridPlay grid;
+	public Color c;
 
 	bool isMoving = false;
+	bool isDeleting = false;
 
 	// Use this for initialization
 	void Start () {
@@ -59,7 +61,13 @@ public class Block : MonoBehaviour {
 
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () { 
+		if (isDeleting) {
+			render.color = c;
+			return;
+		}
+		if (grid.deletingCol || grid.deletingRow)
+			return;
 		if (Input.GetMouseButtonUp (0) && isMoving) {
 			CheckPosition ();
 			render.sortingOrder = 0;
@@ -83,9 +91,18 @@ public class Block : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
+		if (isDeleting || grid.deletingCol || grid.deletingRow)
+			return;
 		if (Input.GetMouseButton (0)) {
 			isMoving = true;
 			render.sortingOrder = 10;
 		}
+	}
+
+	public bool DestroyBlock(){
+		isDeleting = true;
+		c = render.color;
+		c.a -= 0.1f;
+		return (c.a <= 0);
 	}
 }
