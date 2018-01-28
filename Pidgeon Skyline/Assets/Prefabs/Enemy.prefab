@@ -78,11 +78,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e982a1716e5594940bdbba0442be42f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockImage: {fileID: 21300000, guid: 7f07ed304a9e34047bad61aa54387320, type: 3}
+  blockImage: {fileID: 21300000, guid: d3c9a53c66ecb2842a06b7731f2e7cfd, type: 3}
   blockName: Enemy
   moveDetectionOffset: 0.5
   anchoredPosition: {x: 1.0000002, y: 4.6666665}
   index: {x: 0, y: 0}
+  c: {r: 0, g: 0, b: 0, a: 0}
 --- !u!212 &212639580269378620
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -118,7 +119,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7f07ed304a9e34047bad61aa54387320, type: 3}
-  m_Color: {r: 1, g: 0.93103445, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
