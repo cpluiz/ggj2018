@@ -19,6 +19,7 @@ public class GridPlay : MonoBehaviour {
 	private List<Vector2Int> blocksToDestroy;
 	public bool deletingRow, deletingCol = false;
 	Vector2 effectPosition;
+	bool showEffect;
 
 	// Use this for initialization
 	void Start () {
@@ -67,12 +68,14 @@ public class GridPlay : MonoBehaviour {
 		string blockName = block [x, y].blockName;
 		vertical = CheckVertical (x, y, blockName);
 		if (vertical >= 3) {
+			showEffect = !blockName.Equals("NoAction");
 			deletingCol = true;
 			deletingRow = false;
 			effectPosition = point [x, y];
 		} else{
 			horizontal = CheckHorizontal (x, y, blockName);
 			if (horizontal >= 3) {
+				showEffect = !blockName.Equals("NoAction");
 				deletingRow = true;
 				deletingCol = false;
 				effectPosition = point [x, y];
@@ -227,13 +230,15 @@ public class GridPlay : MonoBehaviour {
 		if (deletingCol) {
 			DestroyColumnBlocks ();
 			if (!deletingCol) {
-				Instantiate (effect, effectPosition, Quaternion.identity);
+				if(showEffect)
+					Instantiate (effect, effectPosition, Quaternion.identity);
 				FillPuzzleBoard ();
 			}
 		}else if (deletingRow) {
 			DestroyRowBlocks ();
 			if (!deletingRow) {
-				Instantiate (effect, effectPosition, Quaternion.identity);
+				if(showEffect)
+					Instantiate (effect, effectPosition, Quaternion.identity);
 				FillPuzzleBoard ();
 			}
 		}
