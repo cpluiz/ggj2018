@@ -42,7 +42,6 @@ public class GridPlay : MonoBehaviour {
 			}
 		}
 		puzzleBounds = new Bounds (new Vector2(0, point[0,4].y+blockWidth*1.5f) ,new Vector2 (blockWidth * cols, blockWidth * rows));
-//		AudioManager.MusicVolume (0.5f);
 	}
 
 	Block GetBlock(int x, int y){
@@ -138,6 +137,7 @@ public class GridPlay : MonoBehaviour {
 				complement = "+2";
 			}
 			AudioManager.PlayEffect ("Drop"+complement);
+			AudioManager.PlayUiEffect ("puzzle");
 			block [x, y] = null;
 			return true;
 		}
@@ -246,14 +246,14 @@ public class GridPlay : MonoBehaviour {
 			DestroyColumnBlocks ();
 			if (!deletingCol) {
 				if(showEffect)
-					Instantiate (effect, effectPosition, Quaternion.identity);
+					Instantiate (effect, effectPosition, Quaternion.identity).name = effectName;
 				FillPuzzleBoard ();
 			}
 		}else if (deletingRow) {
 			DestroyRowBlocks ();
 			if (!deletingRow) {
 				if(showEffect)
-					Instantiate (effect, effectPosition, Quaternion.identity);
+					Instantiate (effect, effectPosition, Quaternion.identity).name = effectName;
 				FillPuzzleBoard ();
 			}
 		}

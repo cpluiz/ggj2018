@@ -4,15 +4,5 @@ using UnityEngine;
 
 public class EffectBehavior : MonoBehaviour {
 
-	public string effectName = "";
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

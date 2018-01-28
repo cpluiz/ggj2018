@@ -4,7 +4,7 @@ using BaseAssets;
 
 public class TitleManager : MonoBehaviour {
 
-	public float audioVolume, effectVolume = 50f;
+	public float audioVolume, effectVolume, uiVolume = 50f;
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +15,5 @@ public class TitleManager : MonoBehaviour {
 	public void LoadNextScene(){
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex +1);
 	}
-	
 
 }

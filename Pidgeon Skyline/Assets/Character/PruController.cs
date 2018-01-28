@@ -24,8 +24,9 @@ public class PruController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		Debug.Log (other.name);
-		x += 1;
-		targetPosition = board.GetGridPosition (x, y);
+		if (other.name == "Go") {
+			x += 1;
+			targetPosition = board.GetGridPosition (x, y);
+		}
 	}
 }
