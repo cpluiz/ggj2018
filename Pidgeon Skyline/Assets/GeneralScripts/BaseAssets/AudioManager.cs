@@ -73,8 +73,10 @@ namespace BaseAssets {
         //Function called to define global effects (effect and user interface) volume;
         public static void EffectsVolume(float volume) {
             AudioManager.EffectVolume(volume);
-            AudioManager.UiVolume(volume);
         }
+		public static void UIVolume(float volume){
+			AudioManager.UiVolume(volume);
+		}
         //Function called to define
         private static void EffectVolume(float volume) {instance.effectSource.volume = volume/100;}
         private static void UiVolume(float volume) { instance.uiSource.volume = volume/100; }

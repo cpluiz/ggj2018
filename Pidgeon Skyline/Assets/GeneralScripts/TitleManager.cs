@@ -10,6 +10,7 @@ public class TitleManager : MonoBehaviour {
 	void Start () {
 		AudioManager.MusicVolume (audioVolume);
 		AudioManager.EffectsVolume (effectVolume);
+		AudioManager.EffectsVolume (uiVolume);
 	}
 
 	public void LoadNextScene(){
