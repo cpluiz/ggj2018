@@ -19,6 +19,7 @@ public class GridPlay : MonoBehaviour {
 	public Bounds puzzleBounds;
 	private List<Vector2Int> blocksToDestroy;
 	public bool deletingRow, deletingCol = false;
+	public int groupsDeleted;
 	Vector2 effectPosition;
 	bool showEffect;
 	string effectName;
@@ -120,30 +121,11 @@ public class GridPlay : MonoBehaviour {
 			minY--;
 		}
 		if (remove) {
+			AudioManager.PlayEffect ("Drop"+groupsDeleted);
+			groupsDeleted = Mathf.Clamp(groupsDeleted + 1, 0, 4);
 			deletingCol = false;
 		}
 	}
-
-	bool RemoveBlock(int x, int y, int index = 1, int totalToRemove = 1){
-		Block bloc = block [x, y];
-		string complement = "";
-		if (bloc == null)
-			return true;
-		if (bloc.DestroyBlock ()) {
-			Destroy (bloc.gameObject);
-			if (index == 0) {
-				complement = "+1";
-			} else if (index < totalToRemove) {
-				complement = "+2";
-			}
-			AudioManager.PlayEffect ("Drop"+complement);
-			AudioManager.PlayUiEffect ("puzzle");
-			block [x, y] = null;
-			return true;
-		}
-		return false;
-	}
-		
 
 	void DestroyRowBlocks(){
 		int y = blocksToDestroy [0].y;
@@ -162,8 +144,23 @@ public class GridPlay : MonoBehaviour {
 			j--;
 		}
 		if (remove) {
+			AudioManager.PlayEffect ("Drop"+groupsDeleted);
+			groupsDeleted = Mathf.Clamp(groupsDeleted + 1, 0, 4);
 			deletingRow = false;
 		}
+	}
+
+	bool RemoveBlock(int x, int y, int index = 1, int totalToRemove = 1){
+		Block bloc = block [x, y];
+		if (bloc == null)
+			return true;
+		if (bloc.DestroyBlock ()) {
+			Destroy (bloc.gameObject);
+			AudioManager.PlayEffect ("puzzle");
+			block [x, y] = null;
+			return true;
+		}
+		return false;
 	}
 
 	void CheckAllPuzzleBlocks(){
@@ -171,6 +168,9 @@ public class GridPlay : MonoBehaviour {
 			for (int j = 0; j < rows; j++) {
 				CheckNeighboards (i, j);
 			}
+		}
+		if(!deletingCol && !deletingRow){
+			groupsDeleted = 0;
 		}
 	}
 
