@@ -12,8 +12,20 @@ public class BoardManager : MonoBehaviour {
 	private MazeTile[,] tile;
 	private Vector2 firstTileUp;
 
-	private int cols = 6;
-	private int rows = 3;
+	private int c = 6;
+	private int r = 3;
+
+	public int cols {
+		get {
+			return c;
+		}
+	}
+
+	public int rows {
+		get {
+			return r;
+		}
+	}
 
 	private int mazeCols = 10;
 	private int mazeRols = 3;
@@ -38,7 +50,17 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	public Vector2 GetGridPosition(int x, int y){
-		return new Vector2 (firstTileUp.x +(blockWidth * x), firstTileUp.y -(blockHeight * y));
+		return GetGridPosition(new Vector2Int(x, y));
+	}
+
+	public Vector2 GetGridPosition(Vector2Int coordinate){
+		return new Vector2 (firstTileUp.x +(blockWidth * coordinate.x), firstTileUp.y -(blockHeight * coordinate.y));
+	}
+
+	public Vector2Int validateCoordinates(Vector2Int coordinate){
+		coordinate.x = Mathf.Clamp (coordinate.x, 0, rows);
+		coordinate.y = Mathf.Clamp (coordinate.y, 0, cols);
+		return coordinate;
 	}
 
 	void Update(){
