@@ -246,16 +246,21 @@ public class GridPlay : MonoBehaviour {
 			DestroyColumnBlocks ();
 			if (!deletingCol) {
 				if(showEffect)
-					Instantiate (effect, effectPosition, Quaternion.identity).name = effectName;
+					SpawnEffect(effectPosition, effectName);
 				FillPuzzleBoard ();
 			}
 		}else if (deletingRow) {
 			DestroyRowBlocks ();
 			if (!deletingRow) {
 				if(showEffect)
-					Instantiate (effect, effectPosition, Quaternion.identity).name = effectName;
+					SpawnEffect(effectPosition, effectName);
 				FillPuzzleBoard ();
 			}
 		}
+	}
+
+	private void SpawnEffect(Vector3 position, string name){
+		EffectBehavior spawnedEffect = Instantiate (effect, effectPosition, Quaternion.identity);
+		spawnedEffect.SetEffect(effectName);
 	}
 }

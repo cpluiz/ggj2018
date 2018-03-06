@@ -1,16 +1,27 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MazeTile : MonoBehaviour {
+public class MazeTile : MonoBehaviour{
+	[SerializeField]
+	private PruController player = null;
 
-	// Use this for initialization
-	void Start () {
-		
+	void Awake() {
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	void OnTriggerEnter2D(Collider2D other) {
+		Debug.Log(other.tag);
+		if (other.gameObject.CompareTag("Player")) {
+			player = other.GetComponent<PruController>();
+		} else {
+			if (player != null && other.CompareTag("Effect")) {
+				player.ExecuteAction((other.name));
+			}
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D other) {
+		player = null;
 	}
 }

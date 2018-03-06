@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BaseAssets;
@@ -17,6 +18,8 @@ public class PruController : MonoBehaviour {
 		board = GameObject.FindObjectOfType<BoardManager> ();
 		transform.position = board.GetGridPosition (boardCoordinates);
 		targetPosition = board.GetGridPosition (boardCoordinates);
+		GetComponent<BoxCollider2D>().enabled = false;
+		GetComponent<BoxCollider2D>().enabled = true;
 	}
 	
 	// Update is called once per frame
@@ -24,8 +27,8 @@ public class PruController : MonoBehaviour {
 		transform.position = Vector3.Lerp (transform.position, targetPosition, Time.deltaTime);
 	}
 
-	void OnTriggerEnter2D(Collider2D other){
-		switch (other.name) {
+	public void ExecuteAction(String action){
+		switch (action) {
 		case "Go":
 			boardCoordinates = board.validateCoordinates (boardCoordinates + Vector2Int.right);
 			targetPosition = board.GetGridPosition (boardCoordinates);
