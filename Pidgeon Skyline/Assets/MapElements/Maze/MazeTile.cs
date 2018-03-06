@@ -11,7 +11,6 @@ public class MazeTile : MonoBehaviour{
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log(other.tag);
 		if (other.gameObject.CompareTag("Player")) {
 			player = other.GetComponent<PruController>();
 		} else {
@@ -22,6 +21,8 @@ public class MazeTile : MonoBehaviour{
 	}
 
 	private void OnTriggerExit2D(Collider2D other) {
-		player = null;
+		if (other.CompareTag("Plauer")) {
+			player = null;
+		}
 	}
 }

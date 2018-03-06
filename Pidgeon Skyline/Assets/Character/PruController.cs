@@ -27,7 +27,8 @@ public class PruController : MonoBehaviour {
 		transform.position = Vector3.Lerp (transform.position, targetPosition, Time.deltaTime);
 	}
 
-	public void ExecuteAction(String action){
+	public void ExecuteAction(String action) {
+		Debug.Log("Ação: " + action);
 		switch (action) {
 		case "Go":
 			boardCoordinates = board.validateCoordinates (boardCoordinates + Vector2Int.right);
