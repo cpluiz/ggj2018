@@ -54,7 +54,7 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	public Vector2 GetGridPosition(Vector2Int coordinate){
-		return new Vector2 (firstTileUp.x +(blockWidth * coordinate.x), firstTileUp.y -(blockHeight * coordinate.y));
+		return new Vector2 (firstTileUp.x +(blockWidth * coordinate.x), firstTileUp.y -(blockHeight * coordinate.y)) + (Vector2)transform.position;
 	}
 
 	public Vector2Int validateCoordinates(Vector2Int coordinate){

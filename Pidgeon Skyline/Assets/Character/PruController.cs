@@ -11,6 +11,7 @@ public class PruController : MonoBehaviour {
 	[SerializeField]
 	Vector2 targetPosition;
 
+
 	// Use this for initialization
 	void Start () {
 		boardCoordinates.x = 0;
@@ -24,6 +25,9 @@ public class PruController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (MoveAlogBoard()) {
+			transform.position = targetPosition;
+		}
 		transform.position = Vector3.Lerp (transform.position, targetPosition, Time.deltaTime);
 	}
 
@@ -47,5 +51,11 @@ public class PruController : MonoBehaviour {
 			AudioManager.PlayEffect ("special_pombo");
 			break;
 		}
+	}
+
+	bool MoveAlogBoard() {
+		Vector2 actualPosition = targetPosition;
+		targetPosition = board.GetGridPosition (boardCoordinates);
+		return actualPosition != targetPosition;
 	}
 }
